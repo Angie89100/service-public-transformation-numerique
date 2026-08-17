@@ -1,0 +1,15 @@
+SITE « SERVICE PUBLIC & TRANSFORMATION NUMÉRIQUE » — VERSION COMPLÈTE V3
+
+Cette version reprend le dernier HTML sans modifier sa mise en page ni ses contenus.
+
+Pour l’utiliser dans Visual Studio Code :
+
+1. Décompressez le fichier ZIP.
+2. Ouvrez le dossier complet « Site_Service_public_HTML_COMPLET_v3 ».
+3. Faites un clic droit sur index.html, puis choisissez « Open with Live Server ».
+
+Important : ne déplacez pas index.html en dehors du dossier. Le sous-dossier « prototypes » contient SmartFormation et le sous-dossier « media » contient la vidéo.
+
+Les boutons TERRI’COMPÉTENCES, QVCT 360° et SmartFormation s’ouvrent dans la même fenêtre. TERRI’COMPÉTENCES et QVCT 360° nécessitent une connexion Internet.
+
+Un lien discret « Retour en haut » est présent à la fin de chacune des sept parties du portfolio.

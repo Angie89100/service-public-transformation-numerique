@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartFormation — Connaissances, relation usagers et qualité de service</title>
+  <style>
+    :root{
+      --navy:#1f2a44;
+      --navy2:#111827;
+      --green:#009c4a;
+      --green-dark:#007a3a;
+      --ink:#182033;
+      --muted:#5d6472;
+      --soft:#f5f7f4;
+      --soft-green:#eaf8ef;
+      --line:#d8e4dc;
+      --white:#ffffff;
+      --orange:#f59e0b;
+      --blue:#eef4ff;
+      --red:#fef2f2;
+      --shadow:0 18px 44px rgba(31,42,68,.12);
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(135deg,#fff 0%,#f5f7f4 48%,#eaf8ef 100%);line-height:1.58}
+    a{color:inherit}
+    header{background:radial-gradient(circle at top right,rgba(0,156,74,.25),transparent 34%),linear-gradient(135deg,var(--navy),#111827 68%,#0c3322);color:#fff;padding:42px 18px 34px;overflow:hidden;position:relative}
+    header:before{content:"";position:absolute;inset:auto -80px -160px auto;width:380px;height:380px;border:38px solid rgba(0,156,74,.25);border-radius:50%;transform:rotate(18deg)}
+    .hero{position:relative;max-width:1180px;margin:auto;display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}
+    .badge{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.12);font-weight:900;letter-spacing:.02em;margin-bottom:18px}
+    h1{margin:0 0 12px;font-size:clamp(2.4rem,5vw,4.8rem);line-height:.98;letter-spacing:-.05em}
+    h1 span{color:#36d879}
+    .subtitle{font-size:1.26rem;max-width:860px;font-weight:800;margin:0;color:#edf7ef}
+    .hero-text{max-width:900px;margin:18px 0 0;color:#dce7df;font-size:1.03rem}.hero-text strong{color:#ffffff}
+    .hero-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);border-radius:var(--radius);padding:24px;box-shadow:0 22px 60px rgba(0,0,0,.18)}
+    .hero-card h2{color:#fff;margin:0 0 12px;font-size:1.35rem}.hero-card p{color:#eef8f1;margin:0 0 14px}
+    .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.mini{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:12px;font-weight:900;color:#fff}
+    nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:12px 10px;box-shadow:0 8px 22px rgba(31,42,68,.06)}
+    .tab-btn{border:0;border-radius:999px;background:#eef3ef;color:var(--navy);font-weight:900;padding:9px 13px;cursor:pointer}.tab-btn.active,.tab-btn:hover{background:var(--green);color:#fff}
+    main{max-width:1180px;margin:28px auto;padding:0 16px}
+    .panel{display:none;background:rgba(255,255,255,.96);border:1px solid #fff;border-radius:var(--radius);padding:30px;margin-bottom:26px;box-shadow:var(--shadow)}
+    .panel.active{display:block;animation:fade .24s ease-out}@keyframes fade{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:none}}
+    h2{margin:0 0 10px;color:var(--navy);font-size:clamp(1.55rem,3vw,2.35rem);letter-spacing:-.03em} h3{margin:0 0 8px;color:var(--navy)}
+    .lead{max-width:980px;color:var(--muted);font-size:1.07rem;margin:0 0 18px}.section-kicker{color:var(--green);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.78rem;margin-bottom:7px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:22px;align-items:stretch}.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px;margin-top:22px}.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-top:22px}
+    .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 8px 22px rgba(31,42,68,.07);display:flex;flex-direction:column}
+    .card.green{background:linear-gradient(180deg,#fff,#eaf8ef);border-color:#c6efd4}.card.navy{background:linear-gradient(180deg,#fff,#eef2ff);border-color:#dbe3ff}.card.orange{background:linear-gradient(180deg,#fff,#fff7ed);border-color:#fed7aa}.card.red{background:linear-gradient(180deg,#fff,#fef2f2);border-color:#fecaca}.card ul{margin:8px 0 0;padding-left:18px}.card li{margin:5px 0}.contribution{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);font-weight:850;color:#1f2a44}.contribution strong{color:var(--green-dark)}
+    .quote{border-left:6px solid var(--green);background:#f2fbf5;border-radius:18px;padding:18px 20px;margin:22px 0;color:#16351f;font-weight:850}.notice{background:linear-gradient(90deg,#edf8f0,#f8fbff);border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin-top:20px;color:#26324a}
+    .flow{display:grid;gap:12px;margin-top:20px}.step{display:grid;grid-template-columns:14px 1fr;gap:14px;align-items:start;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 8px 22px rgba(31,42,68,.06)}.dot{width:14px;height:14px;border-radius:50%;background:var(--green);margin-top:7px;box-shadow:0 0 0 6px rgba(0,156,74,.11)}
+    table{width:100%;border-collapse:collapse;margin-top:18px;overflow:hidden;border-radius:16px;background:#fff}th,td{padding:13px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#edf8f0;color:var(--navy);font-weight:900}tr:last-child td{border-bottom:0}
+    .btn{border:0;border-radius:999px;background:var(--green);color:#fff;text-decoration:none;padding:12px 18px;font-weight:900;cursor:pointer;box-shadow:0 12px 22px rgba(0,156,74,.22);display:inline-flex;align-items:center;justify-content:center;gap:8px}.btn:hover{background:var(--green-dark)}.btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+    details{background:#fff;border:1px solid var(--line);border-radius:16px;margin:10px 0;box-shadow:0 6px 18px rgba(31,42,68,.05);overflow:hidden}summary{cursor:pointer;font-weight:900;color:var(--navy);padding:14px 18px;list-style:none}summary::-webkit-details-marker{display:none}summary:after{content:"+";float:right;color:var(--green);font-weight:900}details[open] summary:after{content:"–"}.details-body{padding:0 18px 18px;color:#30384b}
+    .examples{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:20px}.example-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 8px 22px rgba(31,42,68,.06)}.example-card a{color:var(--green-dark);font-weight:900;text-decoration:none}.example-card a:hover{text-decoration:underline}
+    .benchmark-box{display:none;margin-top:24px;padding:24px;border:1px solid #c6efd4;border-radius:24px;background:linear-gradient(180deg,#ffffff,#f2fbf5);box-shadow:0 12px 30px rgba(31,42,68,.08)}.benchmark-box.open{display:block}
+    .benefit-layout{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:18px;margin-top:22px}.benefit-card{position:relative;overflow:hidden;border-radius:22px;padding:22px;border:1px solid var(--line);box-shadow:0 10px 26px rgba(31,42,68,.08);background:#fff}.benefit-card:after{content:"";position:absolute;right:-42px;top:-42px;width:120px;height:120px;border-radius:50%;background:rgba(0,156,74,.09)}.benefit-icon{width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;background:var(--green);margin-bottom:12px;box-shadow:0 10px 20px rgba(0,156,74,.18)}.benefit-agent{background:linear-gradient(180deg,#ffffff,#eaf8ef)}.benefit-manager{background:linear-gradient(180deg,#ffffff,#eef4ff)}.benefit-service{background:linear-gradient(180deg,#ffffff,#fff7ed)}.benefit-user{background:linear-gradient(180deg,#ffffff,#f8fbff)}.benefit-card ul{margin:10px 0 0;padding-left:18px}.benefit-card li{margin:5px 0}
+    .module{border-top:5px solid var(--green)}.module.blue{border-top-color:#2563eb}.module.orange{border-top-color:#f59e0b}.module.red{border-top-color:#ef4444}
+    footer{text-align:center;color:#596172;padding:24px}
+    @media(max-width:860px){.hero{grid-template-columns:1fr}.mini-grid{grid-template-columns:1fr}.panel{padding:22px}.step{grid-template-columns:1fr}.dot{display:none}}
+    @media print{nav,.btn-row,.btn{display:none!important}body{background:#fff;font-size:12pt}header{color:#111;background:#fff;border-bottom:2px solid #111;padding:20px 0}header:before{display:none}.hero{grid-template-columns:1fr;max-width:none}.hero-card{background:#fff;color:#111;border:1px solid #ddd;box-shadow:none}.hero-card h2,.hero-card p,.mini{color:#111}.mini{background:#fff;border:1px solid #ddd}h1 span{color:#111}.panel{display:block!important;box-shadow:none;border:1px solid #ddd;page-break-inside:avoid;break-inside:avoid;margin:0 0 14px;padding:20px}.grid,.grid-2,.grid-3,.examples,.benefit-layout,.benchmark-box{break-inside:avoid}.card,.example-card,.benefit-card,details,.step,table{break-inside:avoid;page-break-inside:avoid}main{max-width:none;margin:0;padding:0}@page{size:A4;margin:12mm}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="hero">
+    <div>
+      <h1>Smart<span>Formation</span></h1>
+      <p class="subtitle">Plateforme de gestion des connaissances au service de la relation usagers et de la qualité des services publics.</p>
+      <p class="hero-text"><strong>SmartFormation est un concept de plateforme destiné à illustrer une démarche de structuration des connaissances, d'amélioration de la qualité de service et d'accompagnement de la relation usagers.</strong></p>
+      <p class="hero-text">Les fonctionnalités présentées constituent des pistes de travail qui devraient être adaptées aux priorités, à l'organisation et aux moyens de la collectivité. Le dispositif n'est donc pas présenté comme une solution figée, mais comme un support de réflexion pour organiser les savoirs utiles, sécuriser les pratiques et améliorer progressivement le service rendu.</p>
+    </div>
+    <aside class="hero-card">
+      <h2>Finalités du projet</h2>
+      <p>L'objectif n'est pas de proposer une solution prête à déployer, mais d'illustrer une méthode permettant de structurer, partager et actualiser les connaissances utiles au fonctionnement des services.</p>
+      <p>Le concept repose sur des axes pouvant être développés progressivement selon les besoins identifiés, les arbitrages de la collectivité et les moyens disponibles.</p>
+      <div class="mini-grid">
+        <div class="mini">Structurer les connaissances</div>
+        <div class="mini">Favoriser une culture commune</div>
+        <div class="mini">Accompagner les évolutions</div>
+        <div class="mini">Soutenir l'amélioration continue</div>
+      </div>
+    </aside>
+  </div>
+</header>
+
+<nav>
+  <button class="tab-btn active" data-target="constat">Constat</button>
+  <button class="tab-btn" data-target="vision">Vision</button>
+  <button class="tab-btn" data-target="modules">Modules</button>
+  <button class="tab-btn" data-target="procedures">Procédures</button>
+  <button class="tab-btn" data-target="gouvernance">Gouvernance</button>
+  <button class="tab-btn" data-target="strategie">Alignement PAC</button>
+  <button class="tab-btn" data-target="poste">Missions relation usagers</button>
+  <button class="tab-btn" data-target="pilotage">Pilotage</button>
+  <button class="tab-btn" data-target="benefices">Bénéfices</button>
+</nav>
+
+<main>
+<section id="constat" class="panel active">
+  <div class="section-kicker">Point de départ</div>
+  <h2>Un besoin d'organisation au service de la relation usagers</h2>
+  <p class="lead">La qualité de la relation usagers dépend de la clarté des procédures, de la cohérence des réponses, de la capacité des agents à s'orienter dans les outils et de la transmission effective des bonnes pratiques.</p>
+  <div class="grid">
+    <article class="card"><h3>Procédures dispersées</h3><p>Les consignes utiles peuvent être réparties entre plusieurs dossiers, logiciels, notes internes, habitudes de service ou explications orales.</p></article>
+    <article class="card"><h3>Canaux multiples</h3><p>Accueil physique, téléphone, courrier, courriel, démarches en ligne et signalements doivent produire des réponses cohérentes.</p></article>
+    <article class="card"><h3>Prise de poste exigeante</h3><p>Un agent nouvellement arrivé doit comprendre rapidement les démarches, les circuits de traitement et les niveaux de service attendus.</p></article>
+    <article class="card"><h3>Qualité à objectiver</h3><p>Les irritants, les erreurs récurrentes, les délais et les besoins des usagers doivent être suivis pour orienter les améliorations.</p></article>
+  </div>
+  <div class="quote">SmartFormation fournit un socle partagé pour former, documenter, harmoniser, mesurer et améliorer les pratiques de relation usagers.</div>
+</section>
+
+<section id="vision" class="panel">
+  <div class="section-kicker">Positionnement stratégique</div>
+  <h2>De la formation interne à la gouvernance de la connaissance</h2>
+  <p class="lead">La formation reste un moyen. La finalité devient l'amélioration de l'expérience usager, la fiabilisation des réponses et la capacité de l'organisation à apprendre de ses pratiques.</p>
+  <div class="grid-2">
+    <article class="card green"><h3>Logique initiale</h3><ul><li>accompagner l'embauche</li><li>faciliter la prise de poste</li><li>transmettre les procédures</li><li>réduire la dépendance aux explications orales</li></ul></article>
+    <article class="card navy"><h3>Évolution proposée</h3><ul><li>structurer une base de connaissances commune</li><li>relier procédures, parcours usagers et qualité</li><li>organiser les retours d'expérience</li><li>alimenter le pilotage par les données de terrain</li></ul></article>
+  </div>
+  <div class="notice">Le dispositif devient ainsi un outil transversal : il sert l'intégration des agents, mais aussi la stratégie de relation usagers, la qualité de service, la simplification et l'amélioration continue.</div>
+</section>
+
+<section id="modules" class="panel">
+  <div class="section-kicker">Architecture fonctionnelle</div>
+  <h2>Cinq modules structurants</h2>
+  <p class="lead">SmartFormation peut être organisé comme une plateforme modulaire, centrée sur les usages réels des agents, des encadrants et des services en contact avec le public.</p>
+  <div class="grid">
+    <article class="card module"><h3>Relation usagers</h3><ul><li>standards d'accueil</li><li>posture de conseil et d'orientation</li><li>parcours usagers</li><li>réseau des accueils</li></ul></article>
+    <article class="card module blue"><h3>Base documentaire</h3><ul><li>procédures validées</li><li>modèles de réponse</li><li>FAQ interne</li><li>circuits de traitement</li></ul></article>
+    <article class="card module orange"><h3>Centre de connaissances</h3><ul><li>fiches métier</li><li>tutoriels courts</li><li>vidéos pas à pas</li><li>parcours de prise de poste</li></ul></article>
+    <article class="card module red"><h3>Retour d'expérience</h3><ul><li>irritants signalés</li><li>situations récurrentes</li><li>solutions mises en place</li><li>bonnes pratiques diffusables</li></ul></article>
+    <article class="card module"><h3>Pilotage qualité</h3><ul><li>indicateurs sobres</li><li>satisfaction usagers</li><li>suivi des délais</li><li>aide à la décision</li></ul></article>
+  </div>
+</section>
+
+<section id="procedures" class="panel">
+  <div class="section-kicker">Capital documentaire</div>
+  <h2>Des procédures territoriales classées par domaine</h2>
+  <p class="lead">Les exemples ci-dessous constituent une cartographie de domaines à structurer. Chaque procédure doit être adaptée au fonctionnement local, validée par un référent métier et mise à jour selon un calendrier défini.</p>
+  <div class="btn-row"><button id="benchmarkToggle" class="btn" onclick="toggleBenchmark()">Voir les références et bonnes pratiques</button></div>
+  <div class="grid">
+    <article class="card"><h3>Accueil et relation usagers</h3><p><strong>Ressources pouvant être intégrées dans SmartFormation :</strong></p><ul><li>Accueil physique, téléphonique et numérique</li><li>Qualification et orientation des demandes</li><li>Gestion des rendez-vous et des files d'attente</li><li>Traitement des réclamations et situations complexes</li><li>Information des usagers et suivi des dossiers</li></ul></article>
+    <article class="card"><h3>GRU et sollicitations</h3><p><strong>Ressources pouvant être intégrées dans SmartFormation :</strong></p><ul><li>Réception et enregistrement des demandes</li><li>Qualification, affectation et suivi des sollicitations</li><li>Délais de réponse et niveaux de service attendus</li><li>Clôture, traçabilité et retour d'expérience</li><li>Exploitation des données issues des canaux de contact</li></ul></article>
+    <article class="card"><h3>État civil et élections</h3><p><strong>Ressources pouvant être intégrées dans SmartFormation :</strong></p><ul><li>Demandes d'actes et formalités d'état civil</li><li>Cartes d'identité, passeports et titres sécurisés</li><li>Gestion des listes électorales</li><li>Organisation des scrutins et cérémonies civiles</li><li>Information des usagers sur les pièces à fournir</li></ul></article>
+    <article class="card"><h3>Ressources humaines</h3><p><strong>Ressources pouvant être intégrées dans SmartFormation :</strong></p><ul><li>Recrutement et parcours d'intégration</li><li>Gestion du temps de travail, congés et absences</li><li>Formation et développement des compétences</li><li>Entretiens professionnels et mobilité interne</li><li>Repères pour les encadrants et nouveaux agents</li></ul></article>
+    <article class="card"><h3>Finances et régies</h3><p><strong>Ressources pouvant être intégrées dans SmartFormation :</strong></p><ul><li>Préparation budgétaire et suivi des crédits</li><li>Chaîne de la dépense et engagement</li><li>Mandatement, paiement et contrôles internes</li><li>Titres de recettes, régies et encaissements</li><li>Repères pour sécuriser les pratiques financières</li></ul></article>
+    <article class="card"><h3>Marchés publics et achats</h3><p><strong>Ressources pouvant être intégrées dans SmartFormation :</strong></p><ul><li>Expression du besoin et choix de la procédure</li><li>Consultation, analyse des offres et attribution</li><li>Exécution, suivi et modification du marché</li><li>Archivage des pièces et traçabilité</li><li>Repères pour les services prescripteurs</li></ul></article>
+    <article class="card"><h3>Éducation et petite enfance</h3><p><strong>Ressources pouvant être intégrées dans SmartFormation :</strong></p><ul><li>Inscriptions scolaires, restauration et périscolaire</li><li>Relation avec les familles et information usagers</li><li>Gestion des pièces justificatives</li><li>Organisation des activités et suivi des demandes</li><li>Coordination entre accueil, écoles et services support</li></ul></article>
+    <article class="card"><h3>Services techniques</h3><p><strong>Ressources pouvant être intégrées dans SmartFormation :</strong></p><ul><li>Réception des demandes d'intervention</li><li>Qualification des urgences et priorisation</li><li>Planification des interventions et suivi terrain</li><li>Information des usagers sur l'avancement</li><li>Retour d'expérience sur les demandes récurrentes</li></ul></article>
+    <article class="card"><h3>Urbanisme et aménagement</h3><p><strong>Ressources pouvant être intégrées dans SmartFormation :</strong></p><ul><li>Dépôt et complétude des dossiers</li><li>Instruction, consultations et délais réglementaires</li><li>Information des demandeurs</li><li>Autorisation, conformité et récolement</li><li>Coordination entre front-office et services instructeurs</li></ul></article>
+    <article class="card"><h3>Culture, sport et vie associative</h3><p><strong>Ressources pouvant être intégrées dans SmartFormation :</strong></p><ul><li>Gestion des équipements et réservations</li><li>Subventions, conventions et relations associatives</li><li>Organisation des manifestations</li><li>Demandes d'autorisation et coordination interne</li><li>Information des publics, clubs et associations</li></ul></article>
+    <article class="card"><h3>Action sociale et santé</h3><p><strong>Ressources pouvant être intégrées dans SmartFormation :</strong></p><ul><li>Accueil, orientation et accompagnement des publics</li><li>Aides sociales légales et facultatives</li><li>Logement, hébergement et situations d'urgence</li><li>Santé publique, hygiène et prévention</li><li>Confidentialité, posture professionnelle et relais partenaires</li></ul></article>
+    <article class="card"><h3>Numérique et données</h3><p><strong>Ressources pouvant être intégrées dans SmartFormation :</strong></p><ul><li>Accès aux applications et comptes utilisateurs</li><li>Utilisation des outils métiers et logiciels</li><li>Sécurité des données, RGPD et bonnes pratiques</li><li>Interopérabilité entre outils et circuits de traitement</li><li>Assistance aux agents et accompagnement numérique</li></ul></article>
+  </div>
+
+  <div id="benchmarkInline" class="benchmark-box" aria-live="polite">
+    <div class="section-kicker">Références et bonnes pratiques</div>
+    <h2>Inspirations directement utiles</h2>
+    <p class="lead">Le benchmark est recentré sur les composantes réellement proches de SmartFormation : intégration des agents, documentation métier, gestion des connaissances, qualité de service, amélioration continue et transformation publique.</p>
+    <div class="examples">
+      <article class="example-card"><h3>CNFPT</h3><p>Référence nationale pour la formation des agents territoriaux. SmartFormation complète cette logique à l'échelle locale, sur les procédures internes, les outils et les circuits propres à chaque collectivité.</p><a href="https://www.cnfpt.fr/" target="_blank" rel="noopener">Consulter le CNFPT</a></article>
+      <article class="example-card"><h3>Services Publics +</h3><p>Démarche centrée sur l'amélioration continue, l'écoute des usagers et la qualité des réponses. SmartFormation peut soutenir cette logique en outillant les agents et les services.</p><a href="https://www.plus.transformation.gouv.fr/" target="_blank" rel="noopener">Voir Services Publics +</a></article>
+      <article class="example-card"><h3>Direction interministérielle de la transformation publique</h3><p>Référence sur l'expérience usager, la simplification, la qualité de service et les méthodes d'amélioration des politiques publiques.</p><a href="https://www.modernisation.gouv.fr/" target="_blank" rel="noopener">Consulter la DITP</a></article>
+      <article class="example-card"><h3>DINUM</h3><p>Référence pour les services numériques publics, les communs numériques et les méthodes de conception centrées sur les utilisateurs.</p><a href="https://www.numerique.gouv.fr/" target="_blank" rel="noopener">Consulter la DINUM</a></article>
+      <article class="example-card"><h3>Service-public.fr</h3><p>Exemple de structuration claire des démarches et informations à destination des usagers. SmartFormation transpose cette logique côté agents, procédures internes et pratiques métier.</p><a href="https://www.service-public.fr/" target="_blank" rel="noopener">Consulter Service-public.fr</a></article>
+      <article class="example-card"><h3>Gestion des connaissances</h3><p>Méthode consistant à formaliser, partager et maintenir les savoir-faire utiles pour éviter leur perte lors des mobilités, départs ou réorganisations.</p><a href="https://fr.wikipedia.org/wiki/Gestion_des_connaissances" target="_blank" rel="noopener">Comprendre la démarche</a></article>
+    </div>
+    <div class="notice">Les références ne sont pas présentées comme des copies de SmartFormation. Elles démontrent que ses briques fonctionnelles reposent sur des pratiques reconnues : formation territoriale, documentation, amélioration continue, expérience usager et transformation numérique.</div>
+  </div>
+</section>
+
+<section id="gouvernance" class="panel">
+  <div class="section-kicker">Méthode de déploiement</div>
+  <h2>Une gouvernance documentaire et qualité</h2>
+  <p class="lead">Le dispositif repose sur une organisation légère, compatible avec les contraintes opérationnelles. Il clarifie qui produit, qui valide, qui actualise et comment les retours du terrain sont transformés en amélioration.</p>
+  <div class="flow">
+    <div class="step"><div class="dot"></div><div><h3>Identifier les procédures critiques</h3><p>Repérer les démarches qui génèrent le plus de questions, d'erreurs, de délais, de réclamations ou de dépendance à une seule personne.</p></div></div>
+    <div class="step"><div class="dot"></div><div><h3>Formaliser le bon niveau d'information</h3><p>Produire une fiche courte, un tutoriel, une check-list, un modèle ou une procédure détaillée selon le besoin réel.</p></div></div>
+    <div class="step"><div class="dot"></div><div><h3>Valider par un référent métier</h3><p>Garantir la conformité du contenu, la cohérence avec les pratiques attendues et la compréhension par un nouvel agent.</p></div></div>
+    <div class="step"><div class="dot"></div><div><h3>Diffuser dans les parcours utiles</h3><p>Intégrer les ressources dans l'accueil, la prise de poste, les accueils mutualisés, les services de proximité et les projets de transformation.</p></div></div>
+    <div class="step"><div class="dot"></div><div><h3>Mesurer et améliorer</h3><p>Exploiter les retours agents, les sollicitations récurrentes, les irritants usagers et les données de suivi pour prioriser les mises à jour.</p></div></div>
+  </div>
+</section>
+
+<section id="strategie" class="panel">
+  <div class="section-kicker">Alignement PAC / CAP2032</div>
+  <h2>Une réponse opérationnelle à une mairie plus simple, lisible et proche</h2>
+  <p class="lead">SmartFormation traduit les orientations du PAC en méthode interne : rendre les règles plus claires, fiabiliser les réponses, utiliser le numérique pour libérer du temps humain et soutenir l'amélioration du quotidien.</p>
+  <table>
+    <thead><tr><th>Orientation</th><th>Traduction dans SmartFormation</th><th>Effet attendu</th></tr></thead>
+    <tbody>
+      <tr><td>Règles claires et services fiables</td><td>Procédures validées, versionnement, référents identifiés, modèles de réponse et circuits de traitement.</td><td>Réduction des écarts de pratiques et amélioration de la fiabilité du service rendu.</td></tr>
+      <tr><td>Mairie plus simple, lisible et proche</td><td>Classement par domaine, parcours d'accueil, fiches réflexes et accès rapide aux informations utiles.</td><td>Meilleure orientation des agents et réponses plus homogènes aux usagers.</td></tr>
+      <tr><td>Plus de numérique pour plus d'humain</td><td>Supports numériques courts, base de connaissances et aide à la prise de poste.</td><td>Moins d'explications répétitives, plus de temps pour l'écoute, le conseil et les situations complexes.</td></tr>
+      <tr><td>Transformer et entretenir</td><td>Modernisation progressive des pratiques à partir des besoins réels, sans rupture brutale.</td><td>Amélioration continue durable et compatible avec le fonctionnement des services.</td></tr>
+      <tr><td>Gestion sérieuse et soutenable</td><td>Priorisation des procédures critiques, production interne de ressources et réutilisation des supports.</td><td>Effet utile avec une charge maîtrisée.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="poste" class="panel">
+  <div class="section-kicker">Missions relation usagers</div>
+  <h2>Correspondance avec une direction de la relation usagers et de la qualité de service</h2>
+  <p class="lead">SmartFormation répond particulièrement aux missions liées à la culture commune, à la lisibilité des démarches, au traitement des sollicitations, à la qualité de service, à la donnée et à l'accompagnement des directions.</p>
+  <div class="grid-3">
+    <article class="card green"><h3>Politique transversale</h3><p>Le dispositif aide à construire une culture commune de la relation usagers en diffusant des standards, des procédures et des repères partagés entre services.</p><div class="contribution"><strong>Contribution :</strong> harmoniser les pratiques et diffuser des repères communs.</div></article>
+    <article class="card navy"><h3>Accueil simple et lisible</h3><p>Les ressources structurent les niveaux de service attendus, les circuits d'orientation, les réponses types et les parcours usagers.</p><div class="contribution"><strong>Contribution :</strong> rendre les circuits d’accueil plus clairs et plus homogènes.</div></article>
+    <article class="card orange"><h3>Sollicitations et interventions</h3><p>La plateforme peut documenter les processus de réception, qualification, orientation, suivi, clôture et retour d'expérience.</p><div class="contribution"><strong>Contribution :</strong> structurer le traitement des demandes de la réception au retour d’expérience.</div></article>
+    <article class="card"><h3>Qualité et satisfaction</h3><p>Les retours agents et usagers alimentent une démarche d'amélioration continue : irritants, délais, incompréhensions et besoins émergents.</p><div class="contribution"><strong>Contribution :</strong> transformer les retours de terrain en actions d’amélioration continue.</div></article>
+    <article class="card"><h3>Donnée usagers</h3><p>Les données issues des accueils, appels, courriels, démarches en ligne et signalements peuvent être exploitées pour prioriser les actions.</p><div class="contribution"><strong>Contribution :</strong> objectiver les irritants et prioriser les actions utiles.</div></article>
+    <article class="card"><h3>Accompagnement des directions</h3><p>Le dispositif donne un cadre pour aider chaque direction à intégrer la dimension relation usagers dans ses projets et modes de fonctionnement.</p><div class="contribution"><strong>Contribution :</strong> aider les directions à intégrer la relation usagers dans leurs pratiques.</div></article>
+  </div>
+</section>
+
+<section id="pilotage" class="panel">
+  <div class="section-kicker">Aide à la décision</div>
+  <h2>Un pilotage sobre, utile et défendable</h2>
+  <p class="lead">Les indicateurs ne sont pas présentés comme des promesses chiffrées. Ils servent à observer les usages, prioriser les mises à jour et objectiver les besoins d'accompagnement.</p>
+  <table>
+    <thead><tr><th>Axe de suivi</th><th>Ce qui peut être observé</th><th>Utilité managériale</th></tr></thead>
+    <tbody>
+      <tr><td>Intégration</td><td>Retours après prise de poste, points restés flous, besoins d'explication, procédures difficiles à appliquer.</td><td>Adapter les parcours d'accueil et réduire les ruptures d'information.</td></tr>
+      <tr><td>Relation usagers</td><td>Demandes répétitives, erreurs d'orientation, incompréhensions fréquentes, irritants signalés.</td><td>Améliorer la clarté des réponses et l'homogénéité des pratiques.</td></tr>
+      <tr><td>Traitement des sollicitations</td><td>Étapes bloquantes, délais, réaffectations, demandes incomplètes, clôtures non harmonisées.</td><td>Prioriser les actions sur les processus réellement sensibles.</td></tr>
+      <tr><td>Procédures</td><td>Procédures critiques non formalisées, supports à actualiser, référents à mobiliser.</td><td>Sécuriser les pratiques et réduire la dépendance aux savoirs informels.</td></tr>
+      <tr><td>Qualité de service</td><td>Satisfaction, réclamations, retours agents, données issues des canaux de contact.</td><td>Fonder l'amélioration continue sur les données de terrain.</td></tr>
+    </tbody>
+  </table>
+  <div class="notice">Principe retenu : mesurer pour améliorer, sans afficher d'objectifs artificiels ou difficilement justifiables.</div>
+</section>
+
+<section id="benefices" class="panel">
+  <div class="section-kicker">Effets attendus</div>
+  <h2>Bénéfices organisationnels</h2>
+  <p class="lead">Le projet vise une amélioration concrète du fonctionnement interne et du service rendu : mieux accueillir, mieux orienter, mieux traiter, mieux transmettre et mieux améliorer.</p>
+  <div class="benefit-layout">
+    <article class="benefit-card benefit-agent"><div class="benefit-icon">A</div><h3>Agents</h3><p>Un accès plus rapide aux repères utiles et aux consignes fiables.</p><ul><li>prise de poste plus claire</li><li>autonomie progressive</li><li>réduction de l'incertitude</li></ul></article>
+    <article class="benefit-card benefit-manager"><div class="benefit-icon">E</div><h3>Encadrants</h3><p>Un socle commun pour accompagner sans répéter les mêmes consignes.</p><ul><li>temps recentré sur les situations complexes</li><li>meilleure transmission</li><li>appui à l'organisation</li></ul></article>
+    <article class="benefit-card benefit-service"><div class="benefit-icon">S</div><h3>Services</h3><p>Une continuité documentaire quand les équipes évoluent ou changent d'outils.</p><ul><li>procédures homogènes</li><li>savoirs conservés</li><li>risques d'erreurs réduits</li></ul></article>
+    <article class="benefit-card benefit-user"><div class="benefit-icon">U</div><h3>Usagers</h3><p>Une réponse plus régulière grâce à des pratiques mieux partagées.</p><ul><li>orientation plus lisible</li><li>délais mieux suivis</li><li>service public plus fiable</li></ul></article>
+  </div>
+  <div class="quote">Synthèse institutionnelle : SmartFormation constitue un levier de continuité, de professionnalisation et de qualité de service, en transformant les savoirs internes en ressources accessibles, validées et durablement exploitables.</div>
+</section>
+</main>
+
+<footer>SmartFormation · Gestion des connaissances · Relation usagers · Qualité de service</footer>
+
+<script>
+  const buttons=[...document.querySelectorAll('.tab-btn')];
+  const panels=[...document.querySelectorAll('.panel')];
+  function openPanel(id){
+    const target=document.getElementById(id);
+    if(!target) return;
+    panels.forEach(p=>p.classList.toggle('active',p.id===id));
+    buttons.forEach(b=>b.classList.toggle('active',b.dataset.target===id));
+    history.replaceState(null,'','#'+id);
+    const nav=document.querySelector('nav');
+    const offset=(nav?nav.offsetHeight:0)+18;
+    const y=target.getBoundingClientRect().top+window.pageYOffset-offset;
+    window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+  }
+  function toggleBenchmark(){
+    const box=document.getElementById('benchmarkInline');
+    const btn=document.getElementById('benchmarkToggle');
+    if(!box) return;
+    const open=!box.classList.contains('open');
+    box.classList.toggle('open',open);
+    if(btn) btn.textContent=open?'Masquer les références et bonnes pratiques':'Voir les références et bonnes pratiques';
+    if(open){
+      const nav=document.querySelector('nav');
+      const offset=(nav?nav.offsetHeight:0)+18;
+      const y=box.getBoundingClientRect().top+window.pageYOffset-offset;
+      window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+    }
+  }
+  buttons.forEach(btn=>btn.addEventListener('click',()=>openPanel(btn.dataset.target)));
+  if(location.hash){
+    const id=location.hash.replace('#','');
+    if(id==='benchmark'){ openPanel('procedures'); setTimeout(toggleBenchmark,260); }
+    else if(document.getElementById(id)) openPanel(id);
+  }
+</script>
+</body>
+</html>
+
